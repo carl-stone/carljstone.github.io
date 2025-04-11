@@ -13,7 +13,7 @@ title                    : "Carl Stone / Scientist"
 title_separator          : "-"
 name                     : &name "Carl Stone"
 description              : &description "Carl Stone website"
-url                      : https://carljstone.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
+url                      : https://carljstone.com # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "carl-stone/carljstone.github.io"
 
