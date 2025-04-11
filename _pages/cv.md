@@ -13,7 +13,7 @@ permalink: /cv/
 ## Education
 
 **Vanderbilt University**  
-*Ph.D. Candidate in Biology (bacterial evolution)*  
+*Ph.D. Candidate in Biology*  
 August 2020 – Present  
 
 **University of Minnesota – Twin Cities**  
@@ -61,15 +61,15 @@ April 2016 – August 2017
 ---
 ## Publications
 
-- Stone CJ, Boyer GF, and Behringer MG. 2023. *Differential adenine methylation analysis reveals increased variability in 6mA in the absence of methyl-directed mismatch repair*. **mBio**, 14:e01289-23.
-- Pendleton A, Yeo W-S, Alqahtani S, DiMaggio DA Jr., Stone CJ, et al. 2022. *Regulation of the Sae two-component system by branched-chain fatty acids in Staphylococcus aureus*. **mBio**, 13:e01472-22.
-- Behringer MG, Ho W-C, Meraz JC, Miller SF, Boyer GF, Stone CJ, et al. 2022. *Complex ecotype dynamics evolve in response to fluctuating resources*. **mBio**, 13:e03467-21.
-- Mlynek KD, Bulock LL, Stone CJ, et al. 2020. *Genetic and biochemical analysis of CodY-mediated cell aggregation in Staphylococcus aureus reveals an interaction between extracellular DNA and polysaccharide in the extracellular matrix*. **Journal of Bacteriology**, 202.
+- Stone CJ, Boyer GF, and Behringer MG. 2023. *[Differential adenine methylation analysis reveals increased variability in 6mA in the absence of methyl-directed mismatch repair](https://journals.asm.org/doi/full/10.1128/mbio.01289-23)*. **mBio**, 14:e01289-23.
+- Pendleton A, Yeo W-S, Alqahtani S, DiMaggio DA Jr., Stone CJ, et al. 2022. *[Regulation of the Sae two-component system by branched-chain fatty acids in Staphylococcus aureus](https://journals.asm.org/doi/10.1128/mbio.01472-22?url_ver=Z39.88-2003&rfr_id=ori:rid:crossref.org&rfr_dat=cr_pub%20%200pubmed)*. **mBio**, 13:e01472-22.
+- Behringer MG, Ho W-C, Meraz JC, Miller SF, Boyer GF, Stone CJ, et al. 2022. *[Complex ecotype dynamics evolve in response to fluctuating resources](https://journals.asm.org/doi/10.1128/mbio.03467-21)*. **mBio**, 13:e03467-21.
+- Mlynek KD, Bulock LL, Stone CJ, et al. 2020. *[Genetic and biochemical analysis of CodY-mediated cell aggregation in Staphylococcus aureus reveals an interaction between extracellular DNA and polysaccharide in the extracellular matrix](https://journals.asm.org/doi/10.1128/jb.00593-19)*. **Journal of Bacteriology**, 202.
 
 ---
 ## Conference Presentations
 
-- Stone CJ, Behringer MG. *A Bayesian framework for longitudinal analysis of transposon insertion-based fitness screens.* Oral presentation, Joint Congress on Evolutionary Biology, Montreal, July 2024.
+- Stone CJ, Behringer MG. *A Bayesian framework for longitudinal analysis of transposon insertion-based fitness screens.* Oral presentation, Joint Congress on Evolutionary Biology, Montreal, July 2024. [Watch on YouTube](https://youtu.be/QsKwKt1AudM?si=NFeHhqWiLbInMFoB&t=3420)
 - Stone CJ, Behringer MG. *Differential adenine methylation analysis reveals 6mA variability after experimental evolution.* Poster, The Allied Genetics Conference, March 2024.
 - Stone CJ, Behringer MG. *Increased variability in adenine methylation in the absence of methyl-directed mismatch repair in Escherichia coli.* Poster, Evolution 2022, Cleveland, July 2022.
 - Stone CJ, Behringer MG. *Epigenetic changes during long-term experimental evolution in E. coli.* Talk, SEPEEG Conference, Athens, GA, October 2021.
