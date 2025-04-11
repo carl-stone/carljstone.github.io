@@ -15,7 +15,7 @@ I’m interested in how bacteria adapt to complex environments, and I study this
 In long-term evolution experiments with *Escherichia coli*, I discovered dynamic adenine methylation patterns associated with adaptation to nutrient depletion. These findings suggest that epigenetic variability may play a role in bacterial survival strategies.
 
 - 🧬 First-author publication: [Stone et al., *mBio* (2023)](https://doi.org/10.1128/mbio.01289-23)
-- 📦 R package: [CoMMA on GitHub](https://github.com/YOUR_USERNAME/CoMMA) *(replace with real link)*
+- 📦 R package: [CoMMA on GitHub](https://github.com/carl-stone/CoMMA) *(replace with real link)*
 
 ---
 
@@ -29,9 +29,10 @@ My collaborative work has revealed how semi-stable subpopulations emerge within 
 
 ### Virulence Regulation in *Staphylococcus aureus*
 
-As a research assistant at Georgetown, I investigated how branched-chain fatty acids influence virulence gene regulation. Using molecular tools like GFP reporters and qPCR, we showed that host-derived signals modulate the Sae two-component system.
+As a research assistant at Georgetown, I investigated how branched-chain fatty acids influence virulence gene regulation. Using molecular tools like GFP reporters and mass spectrometry, we showed that lipid signals modulate the Sae two-component system.
 
 - 🦠 Co-author: [Pendleton et al., *mBio* (2022)](https://doi.org/10.1128/mbio.01472-22)
+- 🦠 Co-author: [Mlynek et al., *Journal of Bacteriology* (2020)](https://doi.org/10.1128/jb.00593-19)
 
 ---
 
