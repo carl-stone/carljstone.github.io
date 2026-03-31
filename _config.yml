@@ -9,7 +9,7 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default"
-title                    : "Carl Stone / Scientist"
+title                    : "Carl Stone, Ph.D."
 title_separator          : "-"
 name                     : &name "Carl Stone"
 description              : &description "Carl Stone website"
@@ -22,11 +22,11 @@ repository               : "carl-stone/carljstone.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile.png"
+  avatar           : "/Carlheadshot.jpeg"
   name             : "Carl Stone"
   pronouns         : # example: "she/her"  
-  bio              : "PhD candidate in microbial evolution and genomics. Interested in how bacteria adapt, survive, and shape life on Earth."
-  location         : "Earth"
+  bio              : "Microbial evolution researcher finishing a PhD at Vanderbilt University. Expert in functional genomics and bacterial epigenetics."
+  location         : "Nashville, TN"
   employer         : "Vanderbilt University"
   uri              : # URL
   email            : "carl.j.stone@vanderbilt.edu" 
@@ -37,7 +37,7 @@ author:
   impactstory      : # URL
   orcid            : "https://orcid.org/0000-0003-0232-5223"
   semantic         : # URL
-  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=Carl+Stone"
+  pubmed           : # "https://www.ncbi.nlm.nih.gov/pubmed/?term=Carl+Stone"
   researchgate     : # URL
   scopus           : # URL
 
@@ -59,7 +59,7 @@ author:
   keybase          : # Username
   instagram        : # Username
   lastfm           : # Username
-  linkedin         : # Username
+  linkedin         : "carljstone"
   mastodon         : # URL
   medium           : # URL
   pinterest        : # Username
@@ -217,13 +217,13 @@ collections:
     output: true
     permalink: /:collection/:path/
   publications:
-    output: true
+    output: false
     permalink: /:collection/:path/
   portfolio:
     output: true
     permalink: /:collection/:path/
   talks:
-    output: true
+    output: false
     permalink: /:collection/:path/
 
 

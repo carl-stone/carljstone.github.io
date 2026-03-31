@@ -11,9 +11,8 @@ author_profile: true
 
 {% include base_path %}
 
-<!-- New style rendering if publication categories are defined -->
 {% if site.publication_category %}
-  {% for category in site.publication_category  %}
+  {% for category in site.publication_category %}
     {% assign title_shown = false %}
     {% for post in site.publications reversed %}
       {% if post.category != category[0] %}
@@ -23,14 +22,41 @@ author_profile: true
         <h2>{{ category[1].title }}</h2><hr />
         {% assign title_shown = true %}
       {% endunless %}
-      {% include archive-single.html %}
+
+      <div class="list__item">
+        <article class="archive__item">
+          <p>
+            {{ post.authors }}<br />
+            <strong>{{ post.title }}</strong><br />
+            <em>{{ post.venue }}</em>, {{ post.date | date: "%Y" }}
+          </p>
+          <p>
+            {% if post.paperurl %}<a href="{{ post.paperurl }}">Paper</a>{% endif %}
+            {% if post.paperurl and post.pdfurl and post.pdfurl != "" %}&nbsp;|&nbsp;{% endif %}
+            {% if post.pdfurl and post.pdfurl != "" %}<a href="{{ post.pdfurl }}">PDF</a>{% endif %}
+          </p>
+        </article>
+      </div>
+
     {% endfor %}
   {% endfor %}
 {% else %}
   {% for post in site.publications reversed %}
-    {% include archive-single.html %}
+
+    <div class="list__item">
+      <article class="archive__item">
+        <p>
+          {{ post.authors }}<br />
+          <strong>{{ post.title }}</strong><br />
+          <em>{{ post.venue }}</em>, {{ post.date | date: "%Y" }}
+        </p>
+        <p>
+          {% if post.paperurl %}<a href="{{ post.paperurl }}">Paper</a>{% endif %}
+          {% if post.paperurl and post.pdfurl and post.pdfurl != "" %}&nbsp;|&nbsp;{% endif %}
+          {% if post.pdfurl and post.pdfurl != "" %}<a href="{{ post.pdfurl }}">PDF</a>{% endif %}
+        </p>
+      </article>
+    </div>
+
   {% endfor %}
 {% endif %}
-
-
-

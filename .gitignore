@@ -11,3 +11,16 @@ Gemfile.lock
 # Ingore files created by npm
 node_modules
 package-lock.json
+
+# Local reference files (not for public repo)
+carl_stone_reference.md
+
+# Local Claude plans and memory
+.claude/
+
+# Dissertation LaTeX source (large, not needed for site)
+Carl_Stone_Doctoral_Dissertation/
+
+# CV source files (LaTeX/PDF originals)
+CJS_CV_20260331.tex
+CJS_CV_20260331.pdf
