@@ -52,7 +52,7 @@ August 2020 – May 2026
 
 - Produced the most detailed per-site characterization of the *E. coli* Dam methylome, identifying 177 reproducibly hypomethylated GATC sites at regulatory DNA-protein interaction sites
 - Developed a Bayesian hierarchical model (Stan/brms) for longitudinal RB-TnSeq fitness analysis; constructed an empirical fitness seascape that predicts evolutionary outcomes in long-term evolution experiments
-- Developed and published *commaKit*, an R package for differential bacterial methylation analysis; Bioconductor submission pending
+- Developed *commaKit*, an R/Bioconductor-style package for comparative microbial methylomics from nanopore modification calls
 - Two first-author publications (*mBio* 2023; *bioRxiv* 2026, in review at *MBE*)
 - Designed genome-scale fitness assay using RB-TnSeq with Bayesian modeling
 

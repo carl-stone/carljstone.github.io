@@ -16,7 +16,7 @@ I also characterized how methylation diverges in MMR-deficient evolved clones, f
 
 **Publication:** Stone CJ, Boyer GF, Behringer MG. 2023. Differential adenine methylation analysis reveals increased variability in 6mA in the absence of methyl-directed mismatch repair. *mBio* **14**, e01289-23. [Link](https://journals.asm.org/doi/10.1128/mbio.01289-23)
 
-**Software:** [commaKit](/software/) — R package for differential methylation analysis, developed alongside this work
+**Software:** [commaKit](/software/) — R/Bioconductor-style package for comparative microbial methylomics, developed alongside this work
 
 ---
 
@@ -32,7 +32,7 @@ Using this framework, I constructed an empirical one-dimensional fitness seascap
 
 ## commaKit — R Package for Bacterial Methylation Analysis
 
-[commaKit](https://github.com/carl-stone/comma) is an R package for differential bacterial DNA methylation analysis, developed because no adequate tool existed for per-site 6mA analysis in bacteria. Built alongside the *mBio* 2023 paper, it has since been substantially rewritten with full test coverage, vignettes, and documentation. Bioconductor submission is pending; a companion methods paper is in preparation for *Microbial Resource Announcements*.
+[commaKit](https://github.com/carl-stone/comma) (*Comparative Microbial Methylomics Analysis Kit*; FKA CoMMA) is an R/Bioconductor-style package for comparative microbial methylomics from nanopore modification calls. It was developed because no adequate tool existed for bacterial per-site modification analysis, starting with 6mA and extending toward multi-modification workflows. Built alongside the *mBio* 2023 paper, it has since been substantially rewritten around Bioconductor genomic data structures, S4 classes, tests, vignettes, and documentation. Bioconductor submission is planned; a companion methods paper is in preparation for *Microbial Resource Announcements*.
 
 - GitHub: [carl-stone/comma](https://github.com/carl-stone/comma)
 - Documentation: [carl-stone.github.io/comma](https://carl-stone.github.io/comma/)

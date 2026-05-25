@@ -6,9 +6,9 @@ permalink: /software/
 
 ## commaKit
 
-**commaKit** is an R package for differential bacterial DNA methylation analysis.
+**commaKit** (*Comparative Microbial Methylomics Analysis Kit*; FKA CoMMA) is an R/Bioconductor-style package for comparative microbial methylomics from nanopore modification calls.
 
-It was built because no adequate tool existed for per-site methylation analysis in bacteria — existing approaches were bulk-level or designed for eukaryotic CpG methylation. commaKit was developed alongside the *mBio* 2023 paper, then substantially rewritten with full test coverage, comprehensive vignettes, and pkgdown documentation. **Bioconductor submission is pending.**
+It was built because no adequate tool existed for per-site methylation analysis in bacteria — existing approaches were bulk-level or designed for eukaryotic CpG methylation. commaKit was developed alongside the *mBio* 2023 paper, then substantially rewritten around Bioconductor genomic data structures, formal S4 classes, testthat validation, roxygen2 documentation, vignettes, and pkgdown documentation. **Bioconductor submission is planned.**
 
 A companion methods paper is in preparation for *Microbial Resource Announcements* (Stone CJ, first author).
 
@@ -21,10 +21,10 @@ A companion methods paper is in preparation for *Microbial Resource Announcement
 
 commaKit provides a tidy, end-to-end workflow for:
 
-- Importing per-site methylation calls from long-read sequencers (Nanopore, PacBio)
-- Normalizing and aggregating site-level methylation fractions
-- Performing differential methylation analysis across conditions or timepoints
-- Visualizing methylation distributions, genomic context, and statistical results
+- Importing per-site methylation calls from long-read sequencers, especially nanopore/modkit-style workflows
+- Representing methylation sites with Bioconductor genomic ranges and S4 classes
+- Performing differential methylation analysis across conditions, modification types, and modification contexts
+- Annotating sites, testing enrichment, generating QC summaries, visualizing results, and exporting BED-compatible tracks
 
 ### Installation
 
@@ -34,7 +34,7 @@ if (!requireNamespace("remotes", quietly = TRUE))
   install.packages("remotes")
 remotes::install_github("carl-stone/comma")
 
-# Bioconductor (pending submission)
+# Bioconductor submission is planned
 # BiocManager::install("commaKit")
 ```
 

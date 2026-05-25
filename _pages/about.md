@@ -12,7 +12,7 @@ I'm a microbial evolution researcher finishing my PhD in the [Behringer Lab](htt
 
 **Bayesian fitness genomics.** I developed a Bayesian hierarchical model (Stan/brms) for longitudinal RB-TnSeq — a genome-scale fitness assay — that resolves time-dependent selection rates across the full *E. coli* growth curve, from exponential through long-term stationary phase. Using this framework, I constructed an empirical one-dimensional fitness seascape: a latent phenotypic axis organizing ~3,000 transposon mutant genotypes, with axis position predicting evolutionary arrival time in an independent long-term evolution experiment. In review at *Molecular Biology and Evolution* ([bioRxiv](https://doi.org/10.64898/2026.02.11.703069)).
 
-**Software.** I developed [commaKit](https://github.com/carl-stone/comma), an R package for differential bacterial DNA methylation analysis. It was built alongside the *mBio* paper because no adequate tool existed; it has since been substantially rewritten with full tests and documentation and is pending Bioconductor submission. Full documentation at [carl-stone.github.io/comma](https://carl-stone.github.io/comma/).
+**Software.** I developed [commaKit](https://github.com/carl-stone/comma) (FKA CoMMA), an R/Bioconductor-style package for comparative microbial methylomics from nanopore modification calls. It was built alongside the *mBio* paper because no adequate tool existed for bacterial per-site methylation analysis; it has since been substantially rewritten around Bioconductor genomic data structures, S4 classes, documentation, and test coverage. Full documentation at [carl-stone.github.io/comma](https://carl-stone.github.io/comma/).
 
 ## Background
 
