@@ -1,6 +1,6 @@
 # Distributor
 
-Distributor at `/distributions/` is a Jekyll page with native JavaScript modules. It uses the existing site build. Plotly draws the charts; jStat 1.9.6 supplies special functions, CDFs, and inverse CDFs. jStat is vendored in `lib/` with its MIT license and an ES module wrapper.
+Distributor at `/distributor/` is a Jekyll page with native JavaScript modules. It uses the existing site build. Plotly draws the charts; jStat 1.9.6 supplies special functions, CDFs, and inverse CDFs. jStat is vendored in `lib/` with its MIT license and an ES module wrapper. The old `/distributions/` URL redirects here, preserving shared settings.
 
 ## Add a distribution
 
@@ -56,4 +56,4 @@ bundle exec jekyll serve --host 127.0.0.1 --port 4173
 npm run test:distributions
 ```
 
-Open `http://127.0.0.1:4173/distributions/`. Tests compare densities, CDFs, and quantiles against SciPy reference values, check sampler probabilities, and cover histogram normalization and saved settings. The site's existing JavaScript minification script is independent of these modules.
+Open `http://127.0.0.1:4173/distributor/`. Tests compare densities, CDFs, and quantiles against SciPy reference values, check sampler probabilities, and cover histogram normalization and saved settings. The site's existing JavaScript minification script is independent of these modules.
