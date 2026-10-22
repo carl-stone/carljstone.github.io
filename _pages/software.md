@@ -4,7 +4,7 @@ title: "Software"
 permalink: /software/
 ---
 
-## Distribution explorer
+## Distributor
 
 [Explore probability distributions]({{ '/distributions/' | relative_url }}) with editable parameter sliders, theoretical densities, and sampled histograms. Includes normal, beta, gamma, lognormal, GB2, and Student-t distributions. Rename parameters for the problem at hand and share a link to the current settings.
 

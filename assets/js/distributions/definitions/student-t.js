@@ -11,6 +11,7 @@ export default {
     positive("scale", "s", "Scale", 1, 0.1, 5),
   ],
   support: () => [-Infinity, Infinity],
+  mode: ({ mu }) => mu,
   logPdf: (x, { df, mu, scale }) => logGamma((df + 1) / 2) - logGamma(df / 2) - Math.log(scale) - Math.log(df * Math.PI) / 2 - (df + 1) / 2 * Math.log1p(((x - mu) / scale) ** 2 / df),
   sample({ df, mu, scale }, random) {
     const z = normalSample(random);

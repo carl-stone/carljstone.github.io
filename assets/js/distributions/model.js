@@ -57,15 +57,27 @@ export function densityCurve(distribution, parameters, [lo, hi], logX = false) {
     return logX ? Math.exp(Math.log(lo) * (1 - t) + Math.log(hi) * t) : lo * (1 - t) + hi * t;
   });
   const adaptive = distribution.quantile ? Array.from({ length: 399 }, (_, i) => distribution.quantile((i + 1) / 400, parameters)) : [];
-  const x = [...new Set([...uniform, ...adaptive])].filter(x => Number.isFinite(x) && x >= lo && x <= hi && (!logX || x > 0)).sort((a, b) => a - b);
+  const modes = [distribution.mode?.(parameters)].flat().filter(Number.isFinite);
+  const x = [...new Set([...uniform, ...adaptive, ...modes])].filter(x => Number.isFinite(x) && x >= lo && x <= hi && (!logX || x > 0)).sort((a, b) => a - b);
   const y = x.map(value => {
     const result = density(distribution, value, parameters);
     return Number.isFinite(result) ? result : null;
   });
-  // Use regularly spaced interior points for a readable initial vertical range,
-  // rather than letting a boundary singularity flatten the rest of the curve.
+  // Include exact modes so a peak moving between grid points cannot jitter the
+  // vertical range. Singular boundaries retain a finite, interior-based view.
   const interior = uniform.slice(1, -1).map(value => density(distribution, value, parameters)).filter(Number.isFinite);
-  return { x, y, suggestedMax: Math.max(0, ...interior) };
+  const peaks = modes.map(value => density(distribution, value, parameters)).filter(Number.isFinite);
+  return { x, y, suggestedMax: Math.max(0, ...interior, ...peaks) };
+}
+
+export function densityYRange(curve, logY = false) {
+  const peak = curve.suggestedMax;
+  if (!(peak > 0) || !Number.isFinite(peak)) {
+    throw new Error("This range has no plottable density. Choose Fit range or adjust the parameters.");
+  }
+  // Headroom belongs to the PDF, never to whichever sampled bin is tallest.
+  const ceiling = peak * 1.35;
+  return logY ? [Math.log10(peak) - 5, Math.log10(ceiling)] : [0, ceiling];
 }
 
 export function sliderRange(parameter, value) {

@@ -10,6 +10,7 @@ export default {
     positive("scale", "θ", "Scale", 1, 0.1, 10),
   ],
   support: () => [0, Infinity],
+  mode: ({ shape, scale }) => Math.max(0, (shape - 1) * scale),
   logPdf(x, { shape, scale }) {
     if (x < 0) return -Infinity;
     if (x === 0) return shape < 1 ? Infinity : shape > 1 ? -Infinity : -Math.log(scale);

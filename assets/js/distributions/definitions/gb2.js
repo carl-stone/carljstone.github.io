@@ -12,6 +12,7 @@ export default {
     positive("q", "q", "Shape q", 3, 0.1, 10, "Together, a × q controls the right tail; smaller values give heavier tails."),
   ],
   support: () => [0, Infinity],
+  mode: ({ a, b, p, q }) => a * p <= 1 ? 0 : Math.exp(Math.log(b) + (Math.log(a * p - 1) - Math.log(a * q + 1)) / a),
   logPdf(x, { a, b, p, q }) {
     if (x < 0) return -Infinity;
     if (x === 0) return a * p < 1 ? Infinity : a * p > 1 ? -Infinity : Math.log(a) - Math.log(b) - logBeta(p, q);

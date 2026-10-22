@@ -10,6 +10,7 @@ export default {
     positive("beta", "β", "Shape β", 5, 0.1, 20),
   ],
   support: () => [0, 1],
+  mode: ({ alpha: a, beta: b }) => a > 1 && b > 1 ? (a - 1) / (a + b - 2) : a <= 1 && b <= 1 ? [0, 1] : a <= 1 ? 0 : 1,
   logPdf(x, { alpha, beta }) {
     if (x < 0 || x > 1) return -Infinity;
     if (x === 0) return alpha < 1 ? Infinity : alpha > 1 ? -Infinity : Math.log(beta);

@@ -1,5 +1,5 @@
 import { distributions, distributionById, defaults, validParameter } from "./registry.js";
-import { sampleDistribution, defaultRange, histogram, densityCurve, sliderRange, sliderPosition, sliderValue } from "./model.js";
+import { sampleDistribution, defaultRange, histogram, densityCurve, densityYRange, sliderRange, sliderPosition, sliderValue } from "./model.js";
 import { initialState, restoreState, shareState, STORAGE_KEY } from "./state.js";
 
 const element = id => document.getElementById(`de-${id}`);
@@ -29,6 +29,7 @@ let frame = null;
 let rendering = false;
 let dirty = false;
 let plotEventsBound = false;
+let viewRevision = 0;
 const current = () => distributionById.get(state.id);
 const model = () => state.models[state.id];
 
@@ -44,6 +45,15 @@ function save() {
 function schedule() {
   save();
   if (frame === null) frame = requestAnimationFrame(() => { frame = null; render(); });
+}
+
+function fitRange() {
+  state.range = null;
+  // Also discard Plotly's remembered zoom, even if the computed bounds have
+  // the same values as a previous render.
+  viewRevision++;
+  syncSettings();
+  schedule();
 }
 
 function syncSettings() {
@@ -177,12 +187,11 @@ function renderStatistics(distribution, parameters) {
 function bindPlotEvents() {
   if (plotEventsBound) return;
   plotEventsBound = true;
+  plot.on("plotly_doubleclick", fitRange);
   plot.on("plotly_relayout", event => {
     if (rendering) return;
     if (event["xaxis.autorange"]) {
-      state.range = null;
-      syncSettings();
-      schedule();
+      fitRange();
     } else {
       const range = event["xaxis.range"] ?? (event["xaxis.range[0]"] !== undefined ? [event["xaxis.range[0]"], event["xaxis.range[1]"]] : null);
       if (!range) return;
@@ -219,25 +228,27 @@ async function render() {
     });
     if (state.showDensity) traces.push({
       type: "scatter", mode: "lines", name: "Density", x: curve.x, y: curve.y.map(y => state.logY && y === 0 ? null : y),
-      line: { color: dark ? "#7bc8c0" : "#176c69", width: 2.5 },
+      line: { color: dark ? "#7bc8c0" : "#176c69", width: 2.5, simplify: false },
       hovertemplate: "x: %{x:.5g}<br>Density: %{y:.5g}<extra>Theoretical</extra>",
       connectgaps: false,
     });
-    const ymax = Math.max(state.showDensity ? curve.suggestedMax : 0, state.showHistogram ? Math.max(...bars.y.filter(Number.isFinite)) : 0);
-    if (!(ymax > 0) || !Number.isFinite(ymax)) throw new Error("This range has no plottable density. Choose Fit range or adjust the parameters.");
+    const yRange = densityYRange(curve, state.logY);
     const layout = {
       autosize: true, showlegend: false, bargap: 0, hovermode: "closest", dragmode: "zoom",
+      uirevision: viewRevision,
       margin: { l: 66, r: 16, t: 25, b: 55 },
       paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
       font: { family: "inherit", size: 12, color: ink },
-      xaxis: { title: { text: text(state.variable.trim() || "x"), standoff: 12 }, type: state.logX ? "log" : "linear", range: state.logX ? domain.map(Math.log10) : domain,
+      xaxis: { title: { text: text(state.variable.trim() || "x"), standoff: 12 }, type: state.logX ? "log" : "linear", autorange: false, range: state.logX ? domain.map(Math.log10) : [...domain],
         gridcolor: dark ? "#354049" : "#e9eeee", zerolinecolor: dark ? "#52616a" : "#bbc8cc", tickformat: ".4~g", automargin: true },
       yaxis: { title: { text: "Probability density", standoff: 10 }, type: state.logY ? "log" : "linear",
-        range: state.logY ? [Math.log10(ymax) - 5, Math.log10(ymax) + 0.12] : [0, ymax * 1.12],
+        autorange: false, range: yRange,
         gridcolor: dark ? "#354049" : "#e9eeee", zeroline: false, tickformat: ".3~g", automargin: true },
     };
-    await window.Plotly.react(plot, traces, layout, { responsive: true, displaylogo: false, scrollZoom: false,
-      modeBarButtonsToRemove: ["select2d", "lasso2d"], toImageButtonOptions: { filename: `${state.id}-distribution`, scale: 2 } });
+    await window.Plotly.react(plot, traces, layout, { responsive: true, displaylogo: false, scrollZoom: false, doubleClick: false, showSendToCloud: false,
+      modeBarButtonsToRemove: ["select2d", "lasso2d", "autoScale2d", "resetScale2d"],
+      modeBarButtonsToAdd: [{ name: "Fit range", icon: window.Plotly.Icons.autoscale, click: fitRange }],
+      toImageButtonOptions: { filename: `distributor-${state.id}`, scale: 2 } });
     bindPlotEvents();
     element("x-min").value = Number(domain[0].toPrecision(8));
     element("x-max").value = Number(domain[1].toPrecision(8));
@@ -325,7 +336,7 @@ for (const [id, key] of [["log-x", "logX"], ["log-y", "logY"], ["show-density", 
 
 element("variable").addEventListener("input", () => { state.variable = element("variable").value; schedule(); });
 element("lock-range").addEventListener("change", () => { state.range = element("lock-range").checked ? lastDomain : null; schedule(); });
-element("fit").addEventListener("click", () => { state.range = null; syncSettings(); schedule(); });
+element("fit").addEventListener("click", fitRange);
 element("apply-range").addEventListener("click", () => {
   const min = element("x-min");
   const max = element("x-max");

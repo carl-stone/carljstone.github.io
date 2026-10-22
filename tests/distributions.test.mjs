@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { distributions, distributionById, defaults, density, validParameter } from "../assets/js/distributions/registry.js";
-import { sampleDistribution, defaultRange, histogram, densityCurve, sliderRange, sliderPosition, sliderValue } from "../assets/js/distributions/model.js";
+import { sampleDistribution, defaultRange, histogram, densityCurve, densityYRange, sliderRange, sliderPosition, sliderValue } from "../assets/js/distributions/model.js";
 import { initialState, restoreState, shareState } from "../assets/js/distributions/state.js";
 
 const fixtures = JSON.parse(await readFile(new URL("./distribution-reference.json", import.meta.url), "utf8"));
@@ -95,6 +95,26 @@ test("Student-t moments reflect the selected degrees of freedom", () => {
   assert.deepEqual(student.moments({ df: 0.7, mu: 3, scale: 2 }), { mean: null, sd: null });
   assert.deepEqual(student.moments({ df: 2, mu: 3, scale: 2 }), { mean: 3, sd: Infinity });
   close(student.moments({ df: 5, mu: 3, scale: 2 }).sd, 2 * Math.sqrt(5 / 3));
+});
+
+test("Student-t y ceiling uses its exact peak, including off-grid and off-screen modes", () => {
+  const student = distributionById.get("student-t");
+  const parameters = { df: 1, mu: 1.234, scale: 1.7 };
+  const peak = 1 / (Math.PI * parameters.scale);
+  for (const domain of [[-90, 110], [-1, 3], [-90, -85]]) {
+    const curve = densityCurve(student, parameters, domain);
+    close(curve.suggestedMax, peak, 1e-9, 1e-12);
+    close(densityYRange(curve)[1], 1.35 * peak, 1e-9, 1e-12);
+    close(10 ** densityYRange(curve, true)[1], 1.35 * peak, 1e-9, 1e-12);
+  }
+});
+
+test("moving a normal peak across the plotting grid does not jitter the y bound", () => {
+  const normal = distributionById.get("normal");
+  const expected = 1.35 / (0.8 * Math.sqrt(2 * Math.PI));
+  for (const mu of [-0.913, -0.01, 0.017, 0.425, 1.234]) {
+    close(densityYRange(densityCurve(normal, { mu, sigma: 0.8 }, [-10, 10]))[1], expected, 1e-10);
+  }
 });
 
 test("GB2 reduces to beta prime when a = b = 1", () => {

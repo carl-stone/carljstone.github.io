@@ -1,6 +1,6 @@
-# Distribution explorer
+# Distributor
 
-The explorer at `/distributions/` is a Jekyll page with native JavaScript modules. It uses the existing site build. Plotly draws the charts; jStat 1.9.6 supplies special functions, CDFs, and inverse CDFs. jStat is vendored in `lib/` with its MIT license and an ES module wrapper.
+Distributor at `/distributions/` is a Jekyll page with native JavaScript modules. It uses the existing site build. Plotly draws the charts; jStat 1.9.6 supplies special functions, CDFs, and inverse CDFs. jStat is vendored in `lib/` with its MIT license and an ES module wrapper.
 
 ## Add a distribution
 
@@ -33,7 +33,7 @@ The definition supplies:
 - `logPdf(x, parameters)` or `pdf(x, parameters)`.
 - `sample(parameters, random)`, returning one draw using the supplied seeded generator.
 - `support(parameters)`, returning the lower and upper bounds; use `Infinity` for unbounded support.
-- Optional `cdf`, `quantile`, `moments`, and a TeX `formula` string.
+- Optional `cdf`, `quantile`, `mode`, `moments`, and a TeX `formula` string. `mode(parameters)` returns a number or an array of modes, giving the plot an exact PDF peak.
 
 `quantile` gives a deterministic default plot range and percentile summaries. Without it, the range comes from the sampled values. `cdf` supplies the probability-in-view readout. Missing statistics display a dash; use `null` for undefined moments and `Infinity` for divergent ones.
 
@@ -44,6 +44,8 @@ The definition supplies:
 Display labels never change mathematical parameter keys. Names and values are retained per distribution in the current tab's session. Copy link includes the current distribution, labels, values, variable name, seed, and view. It takes no account or server storage.
 
 Histograms use density normalization with the full sample size in the denominator, including draws outside the viewing window. Logarithmic bins use their widths in the original x units. Log x changes the axis scale; the density is still for X, not for log(X).
+
+The y axis follows the theoretical PDF peak with 35% headroom, independent of the sampled bars. For singular boundary peaks, it uses finite interior density values. Fit range, the toolbar fit control, and double-clicking the plot all reset the view for the current parameters.
 
 ## Development
 

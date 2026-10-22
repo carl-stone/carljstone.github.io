@@ -66,7 +66,7 @@ You should now be able to access the website from `localhost:4000`.
 
 # Maintenance
 
-The [distribution explorer](assets/js/distributions/README.md) uses a registry and one JavaScript file per distribution. See its guide to add a distribution or run its numerical checks.
+[Distributor](assets/js/distributions/README.md) uses a registry and one JavaScript file per distribution. See its guide to add a distribution or run its numerical checks.
 
 Bug reports and feature requests to the template should be [submitted via GitHub](https://github.com/academicpages/academicpages.github.io/issues/new/choose). For questions concerning how to style the template, please feel free to start a [new discussion on GitHub](https://github.com/academicpages/academicpages.github.io/discussions).
 

@@ -10,6 +10,7 @@ export default {
     positive("sigma", "σ", "Log standard deviation", 0.7, 0.1, 3),
   ],
   support: () => [0, Infinity],
+  mode: ({ mu, sigma }) => Math.exp(mu - sigma * sigma),
   logPdf: (x, { mu, sigma }) => x <= 0 ? -Infinity : -Math.log(x) - Math.log(sigma) - LOG_SQRT_2PI - 0.5 * ((Math.log(x) - mu) / sigma) ** 2,
   sample: ({ mu, sigma }, random) => Math.exp(mu + sigma * normalSample(random)),
   cdf: (x, { mu, sigma }) => x <= 0 ? 0 : stats.normal.cdf(Math.log(x), mu, sigma),
