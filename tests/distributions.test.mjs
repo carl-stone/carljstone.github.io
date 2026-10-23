@@ -88,6 +88,7 @@ test("singular boundary densities never become Infinity in the plot", () => {
   assert.equal(curve.y.at(-1), null);
   assert.ok(curve.y.every(y => y === null || Number.isFinite(y)));
   assert.ok(Number.isFinite(curve.suggestedMax) && curve.suggestedMax > 0);
+  assert.ok(curve.suggestedMax < Math.max(...curve.y));
 });
 
 test("Student-t moments reflect the selected degrees of freedom", () => {
@@ -129,6 +130,9 @@ test("broad lognormal ranges retain the finite peak and its y headroom", () => {
     if (!logX) close(Math.max(...curve.y), peak, 1e-10);
     close(densityYRange(curve)[1], 1.35 * peak, 1e-10);
   }
+  const curve = densityCurve({ ...lognormal, mode: undefined }, parameters, defaultRange(lognormal, parameters, []));
+  close(curve.suggestedMax, Math.max(...curve.y), 1e-10);
+  assert.ok(densityYRange(curve)[1] > 11.7);
 });
 
 test("Student-t CDF retains heavy-tail probability on both sides", () => {

@@ -64,10 +64,13 @@ export function densityCurve(distribution, parameters, [lo, hi], logX = false) {
     return Number.isFinite(result) ? result : null;
   });
   // Include exact modes so a peak moving between grid points cannot jitter the
-  // vertical range. Singular boundaries retain a finite, interior-based view.
+  // vertical range, and adaptive peaks for definitions without a known mode.
+  // Only singular boundaries need the finite, interior-based cap.
   const interior = uniform.slice(1, -1).map(value => density(distribution, value, parameters)).filter(Number.isFinite);
   const peaks = modes.map(value => density(distribution, value, parameters)).filter(Number.isFinite);
-  return { x, y, suggestedMax: Math.max(0, ...interior, ...peaks) };
+  const singularBoundary = [lo, hi].some(value => density(distribution, value, parameters) === Infinity);
+  const visible = singularBoundary ? interior : y.filter(Number.isFinite);
+  return { x, y, suggestedMax: Math.max(0, ...visible, ...peaks) };
 }
 
 export function densityYRange(curve, logY = false) {
