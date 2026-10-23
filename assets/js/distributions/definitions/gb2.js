@@ -1,4 +1,4 @@
-import { betaLogOddsQuantile, logBeta, logGammaSample, logistic, positive, softplus, stats } from "../math.js";
+import { betaCdfFromLog, betaLogOddsQuantile, logBeta, logGammaSample, positive, softplus } from "../math.js";
 
 export default {
   id: "gb2",
@@ -20,7 +20,12 @@ export default {
     return Math.log(a) - Math.log(x) - logBeta(p, q) - p * softplus(-t) - q * softplus(t);
   },
   sample: ({ a, b, p, q }, random) => Math.exp(Math.log(b) + (logGammaSample(p, random) - logGammaSample(q, random)) / a),
-  cdf: (x, { a, b, p, q }) => x <= 0 ? 0 : stats.beta.cdf(logistic(a * (Math.log(x) - Math.log(b))), p, q),
+  cdf(x, { a, b, p, q }) {
+    if (x <= 0) return 0;
+    const t = a * (Math.log(x) - Math.log(b));
+    // Evaluate the smaller logistic tail directly, before it rounds to one.
+    return t <= 0 ? betaCdfFromLog(-softplus(-t), p, q) : 1 - betaCdfFromLog(-softplus(t), q, p);
+  },
   quantile: (u, { a, b, p, q }) => Math.exp(Math.log(b) + betaLogOddsQuantile(u, p, q) / a),
   moments({ a, b, p, q }) {
     const base = logBeta(p, q);

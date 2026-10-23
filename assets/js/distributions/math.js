@@ -13,6 +13,16 @@ export function logistic(x) {
   return x >= 0 ? 1 / (1 + Math.exp(-x)) : Math.exp(x) / (1 + Math.exp(x));
 }
 
+export function betaCdfFromLog(logX, a, b) {
+  const x = Math.exp(logX);
+  // I_x(a,b) approaches x^a / (a B(a,b)) at zero. Keep the power in log
+  // space when its correction is negligible, even if x itself underflows.
+  if (x < Number.EPSILON && Math.abs(b - 1) * x < Number.EPSILON) {
+    return Math.exp(a * logX - Math.log(a) - logBeta(a, b));
+  }
+  return stats.beta.cdf(x, a, b);
+}
+
 // Mulberry32. The open interval also keeps logarithms in samplers finite.
 export function seededRandom(seed) {
   let state = seed >>> 0;

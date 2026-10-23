@@ -117,6 +117,50 @@ test("moving a normal peak across the plotting grid does not jitter the y bound"
   }
 });
 
+test("broad lognormal ranges retain the finite peak and its y headroom", () => {
+  const lognormal = distributionById.get("lognormal");
+  const parameters = { mu: 0, sigma: 3 };
+  const peak = Math.exp(4.5) / (3 * Math.sqrt(2 * Math.PI));
+  for (const logX of [false, true]) {
+    const domain = defaultRange(lognormal, parameters, [], logX);
+    const curve = densityCurve(lognormal, parameters, domain, logX);
+    close(curve.suggestedMax, peak, 1e-10);
+    assert.ok(Math.max(...curve.y) <= peak * (1 + 1e-10));
+    if (!logX) close(Math.max(...curve.y), peak, 1e-10);
+    close(densityYRange(curve)[1], 1.35 * peak, 1e-10);
+  }
+});
+
+test("Student-t CDF retains heavy-tail probability on both sides", () => {
+  const student = distributionById.get("student-t");
+  const parameters = { df: 0.1, mu: 0, scale: 1 };
+  // 80-digit mpmath incomplete-beta references.
+  for (const [x, tail] of [
+    [1e10, 0.04173803137173218],
+    [1e160, 4.173803137173218e-17],
+    [1e200, 4.173803137173218e-21],
+    [1e308, 6.615032178778672e-32],
+  ]) {
+    close(student.cdf(-x, parameters), tail, 1e-10, 0);
+    close(student.cdf(x, parameters), 1 - tail, 1e-10, 1e-15);
+  }
+  close(student.cdf(1e10, parameters) - student.cdf(-1e10, parameters), 0.9165239372565356, 1e-10);
+  close(student.cdf(-1e308, { ...parameters, df: 0.001 }), 0.24500173101649436, 1e-10);
+  assert.equal(student.cdf(0, parameters), 0.5);
+  assert.equal(student.cdf(-Infinity, parameters), 0);
+  assert.equal(student.cdf(Infinity, parameters), 1);
+});
+
+test("Student-t CDF avoids overflow in location, scale, and squared distance", () => {
+  const student = distributionById.get("student-t");
+  close(student.cdf(-1e200, { df: 0.1, mu: 0, scale: 1e-200 }), 4.173803137173218e-41, 1e-10, 0);
+  close(student.cdf(1e308, { df: 1, mu: -1e308, scale: 1e308 }), 0.5 + Math.atan(2) / Math.PI, 1e-10);
+  close(student.cdf(-1e308, { df: 1, mu: 1e308, scale: 1e308 }), 0.5 - Math.atan(2) / Math.PI, 1e-10);
+  for (const x of [-1e-10, -0.1, 0.1, 1e-10]) {
+    close(student.cdf(x, { df: 1, mu: 0, scale: 1 }), 0.5 + Math.atan(x) / Math.PI, 1e-10, 1e-15);
+  }
+});
+
 test("GB2 reduces to beta prime when a = b = 1", () => {
   const gb2 = distributionById.get("gb2");
   const parameters = { a: 1, b: 1, p: 1, q: 1 };
@@ -124,6 +168,21 @@ test("GB2 reduces to beta prime when a = b = 1", () => {
     close(density(gb2, x, parameters), 1 / (1 + x) ** 2);
     close(gb2.cdf(x, parameters), x / (1 + x));
   }
+});
+
+test("GB2 CDF retains complementary tails and tail-only range probabilities", () => {
+  const gb2 = distributionById.get("gb2");
+  const parameters = { a: 1, b: 1, p: 1, q: 0.1 };
+  for (const x of [1, 1e10, 1e20, 1e30]) {
+    close(gb2.cdf(x, parameters), -Math.expm1(-0.1 * Math.log1p(x)), 1e-12);
+    close(gb2.cdf(1 / x, { ...parameters, p: 0.1, q: 1 }), Math.exp(-0.1 * Math.log1p(x)), 1e-12);
+  }
+  close(gb2.cdf(1e30, parameters) - gb2.cdf(1e20, parameters), 0.009, 1e-12);
+  // The beta argument underflows, but a small shape keeps its probability finite.
+  close(gb2.cdf(1e200, { a: 2, b: 1, p: 1, q: 0.001 }), -Math.expm1(-0.002 * Math.log(1e200)), 1e-10);
+  close(gb2.cdf(1e-200, { a: 2, b: 1, p: 0.001, q: 1 }), Math.exp(0.002 * Math.log(1e-200)), 1e-10);
+  assert.equal(gb2.cdf(0, parameters), 0);
+  assert.equal(gb2.cdf(Infinity, parameters), 1);
 });
 
 test("positive parameters can extend slider ranges without permitting zero", () => {
