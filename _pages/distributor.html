@@ -1,0 +1,71 @@
+---
+layout: distribution-explorer
+title: "Distributor"
+permalink: /distributor/
+author_profile: false
+description: "Explore normal, beta, gamma, lognormal, GB2, and Student-t distributions with editable parameter sliders and sampled histograms."
+---
+<div id="distribution-explorer" class="de-app">
+  <noscript>This explorer needs JavaScript to calculate and plot distributions in your browser.</noscript>
+  <div id="de-loading" class="de-loading" role="status">Loading the explorer…</div>
+  <div id="de-workspace" class="de-workspace" hidden>
+    <aside class="de-controls" aria-label="Distribution settings">
+      <label class="de-field-label" for="de-distribution">Distribution</label>
+      <select id="de-distribution"></select>
+      <p id="de-description" class="de-description"></p>
+      <div class="de-section-heading"><h2>Parameters</h2><button id="de-reset" type="button" class="de-text-button">Reset</button></div>
+      <p class="de-hint">Edit a name to give a parameter your own label.</p>
+      <div id="de-parameters"></div>
+      <details class="de-sampling" open>
+        <summary>Sampling</summary>
+        <div class="de-two-fields">
+          <div><label for="de-count">Sample size</label><input id="de-count" type="number" min="10" max="50000" step="1" value="2000" required></div>
+          <div><label for="de-bins">Bins</label><input id="de-bins" type="number" min="5" max="200" step="1" value="40" required></div>
+        </div>
+        <div class="de-sample-actions">
+          <button id="de-resample" type="button" class="de-primary">Resample</button>
+          <div><label for="de-seed">Seed</label><input id="de-seed" type="number" min="0" max="4294967295" step="1" value="42" required></div>
+        </div>
+        <p class="de-hint">The seed stays fixed while you change parameters.</p>
+      </details>
+    </aside>
+    <section class="de-results" aria-label="Distribution plots and statistics">
+      <div class="de-chart-toolbar">
+        <div class="de-layers" role="group" aria-label="Plot layers">
+          <label><input id="de-show-density" type="checkbox" checked><span class="de-key de-key-density"></span>Density</label>
+          <label><input id="de-show-histogram" type="checkbox" checked><span class="de-key de-key-histogram"></span>Samples</label>
+        </div>
+        <button id="de-copy" type="button" class="de-text-button">Copy link</button>
+      </div>
+      <div id="de-plot" class="de-plot" role="img" aria-label="Theoretical probability density and sampled histogram"></div>
+      <p id="de-plot-note" class="de-plot-note" aria-live="polite"></p>
+      <p id="de-error" class="de-error" role="alert" hidden></p>
+      <div class="de-view-controls">
+        <label class="de-variable-label" for="de-variable">Variable<input id="de-variable" type="text" value="x" maxlength="60" spellcheck="false"></label>
+        <label><input id="de-log-x" type="checkbox">Log x</label>
+        <label><input id="de-log-y" type="checkbox">Log y</label>
+        <label><input id="de-lock-range" type="checkbox">Hold x range</label>
+        <button id="de-fit" type="button" class="de-text-button">Fit range</button>
+      </div>
+      <details class="de-range-controls">
+        <summary>Set x range</summary>
+        <div class="de-range-fields">
+          <div><label for="de-x-min">Minimum</label><input id="de-x-min" type="number" step="any" required></div>
+          <div><label for="de-x-max">Maximum</label><input id="de-x-max" type="number" step="any" required></div>
+          <button id="de-apply-range" type="button" class="de-secondary">Apply</button>
+        </div>
+      </details>
+      <dl id="de-statistics" class="de-statistics" aria-label="Theoretical distribution statistics"></dl>
+      <details id="de-math" class="de-math">
+        <summary>Equation &amp; parameterization</summary>
+        <div id="de-formula" class="de-formula"></div>
+        <p id="de-support"></p>
+        <p id="de-parameterization" class="de-hint"></p>
+        <a id="de-source" href="https://github.com/carl-stone/carljstone.github.io/tree/master/assets/js/distributions">Distribution source</a>
+      </details>
+    </section>
+  </div>
+  <p id="de-status" class="de-status" role="status" aria-live="polite"></p>
+</div>
+<script id="de-plotly" src="https://cdn.plot.ly/plotly-basic-4.1.2.min.js" defer></script>
+<script type="module" src="{{ '/assets/js/distributions/app.js' | relative_url }}"></script>

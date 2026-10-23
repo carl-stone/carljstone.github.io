@@ -4,6 +4,10 @@ title: "Software"
 permalink: /software/
 ---
 
+## Distributor
+
+[Explore probability distributions]({{ '/distributor/' | relative_url }}) with editable parameter sliders, theoretical densities, and sampled histograms. Includes normal, beta, gamma, lognormal, GB2, and Student-t distributions. Rename parameters for the problem at hand and share a link to the current settings.
+
 ## commaKit
 
 **commaKit** (*Comparative Microbial Methylomics Analysis Kit*; FKA CoMMA) is an R/Bioconductor-style package for comparative microbial methylomics from nanopore modification calls.
